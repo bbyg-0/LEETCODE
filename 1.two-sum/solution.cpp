@@ -1,31 +1,23 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 
 class Solution {
 public:
     std::vector<int> twoSum(std::vector<int>& nums, int target) {
         std::unordered_map<int, int> result;
-        std::vector<int> result2;
 
-        int index = 0;
-        for(int x: nums){
-            result.insert({x, index});
-            try{
-                int X = result.at(target-x);
-                
-                if(X == index) throw X;
-
-                result2.push_back(index);
-                result2.push_back(X);
-
-                return result2;
-            }catch(...){}
-            index++;
+        for(int i = 0; i < nums.size(); i++){
+            int x = target - nums[i];
+            if(result.find(x) != result.end()){
+                return {result[x], i};
+            }
+            result[nums[i]] = i;
         }
 
-        return result2;
-    }
+        return {};
+};
 };
 
 int main(void){
